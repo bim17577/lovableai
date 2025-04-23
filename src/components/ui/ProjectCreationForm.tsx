@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Input } from "./input";
 import { Textarea } from "./textarea";
 import { Button } from "./button";
+import { useNavigate } from "react-router-dom";
 
-// Define the prop type for lifting state up to parent for display
 interface ProjectCreationFormProps {
-  setSubmittedProject: (project: {
+  setSubmittedProject?: (project: {
     projectType: string;
     paid: string;
     company: string;
@@ -21,7 +21,7 @@ interface ProjectCreationFormProps {
 const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
   setSubmittedProject,
 }) => {
-  // Form state
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     projectType: "",
     paid: "",
@@ -34,7 +34,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
     helpNeeded: "",
   });
 
-  // Handle change for all fields
   const handleChange = (
     e:
       | React.ChangeEvent<HTMLInputElement>
@@ -47,11 +46,12 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
     });
   };
 
-  // Handle submit
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmittedProject(form);
-    // Optionally reset the form (comment if you prefer to keep the data in form)
+    if (setSubmittedProject) {
+      setSubmittedProject(form);
+    }
+    navigate("/project-creation", { state: { submittedProject: form } });
     setForm({
       projectType: "",
       paid: "",
@@ -68,7 +68,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
   return (
     <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
       <div className="flex flex-col md:flex-row gap-4">
-        {/* Project type */}
         <div className="flex-1">
           <label className="block mb-1 text-sm font-medium text-[rgba(11,53,98,1)]">
             Is it a company project or personal project?
@@ -85,7 +84,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
             <option value="Company Project">Company Project</option>
           </select>
         </div>
-        {/* Paid/free */}
         <div className="flex-1">
           <label className="block mb-1 text-sm font-medium text-[rgba(11,53,98,1)]">
             Is this a paid project or not?
@@ -104,7 +102,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
         </div>
       </div>
 
-      {/* Company Name & Headline */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <label className="block mb-1 text-sm font-medium text-[rgba(11,53,98,1)]">
@@ -132,7 +129,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
         </div>
       </div>
 
-      {/* Email & Hours */}
       <div className="flex flex-col md:flex-row gap-4">
         <div className="flex-1">
           <label className="block mb-1 text-sm font-medium text-[rgba(11,53,98,1)]">
@@ -162,7 +158,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
         </div>
       </div>
 
-      {/* Description */}
       <div>
         <label className="block mb-1 text-sm font-medium text-[rgba(11,53,98,1)]">
           Tell us a little bit about what you need
@@ -176,7 +171,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
         />
       </div>
 
-      {/* Business Need */}
       <div>
         <label className="block mb-1 text-sm font-medium text-[rgba(11,53,98,1)]">
           Which area of need does it affect, why are you hoping to address something with this?
@@ -195,7 +189,6 @@ const ProjectCreationForm: React.FC<ProjectCreationFormProps> = ({
           <option value="I need to grow and scale a local business">I need to grow and scale a local business</option>
         </select>
       </div>
-      {/* Help Needed */}
       <div>
         <label className="block mb-1 text-sm font-medium text-[rgba(11,53,98,1)]">
           Specific needs (may expand as your needs solidify)
