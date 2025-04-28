@@ -1,12 +1,20 @@
+
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import FooterSection from '../components/home/FooterSection';
+import { Button } from '@/components/ui/button';
 
 const ClientForm = () => {
   const navigate = useNavigate();
 
   const handleHomeClick = () => {
     navigate('/');
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle form submission logic here
+    alert('Form submitted successfully!');
   };
 
   return (
@@ -20,12 +28,12 @@ const ClientForm = () => {
         <nav className="bg-white shadow-sm">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex justify-start h-16">
-              <button
-                onClick={handleHomeClick}
+              <Link 
+                to="/"
                 className="inline-flex items-center px-3 py-2 text-sm font-medium text-gray-700 hover:text-gray-900"
               >
                 Home
-              </button>
+              </Link>
             </div>
           </div>
         </nav>
@@ -41,7 +49,7 @@ const ClientForm = () => {
             Share your business challenge by completing the questionnaire below, or feel free to contact us directly for a personalized discussion.
           </p>
           
-          <form className="space-y-6">
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="block text-sm font-medium">Is this a company project or a personal project?</label>
@@ -93,9 +101,9 @@ const ClientForm = () => {
               <input type="text" className="w-full p-2 border rounded-md" placeholder="Enter timeline" />
             </div>
 
-            <button type="submit" className="w-full bg-[rgba(11,53,98,1)] text-white py-3 rounded-md hover:bg-[rgba(11,53,98,0.9)] transition-colors">
+            <Button type="submit" className="w-full bg-[rgba(11,53,98,1)] text-white py-3 rounded-md hover:bg-[rgba(11,53,98,0.9)] transition-colors">
               Submit
-            </button>
+            </Button>
           </form>
         </div>
       </main>
