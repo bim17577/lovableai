@@ -1,6 +1,14 @@
+
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const ClientSection: React.FC = () => {
+  const navigate = useNavigate();
+
+  const handleSubmitClick = () => {
+    navigate('/client-form');
+  };
+
   return (
     <section
       className="bg-[rgba(11,53,98,1)] flex w-full flex-col overflow-hidden items-center text-white font-semibold justify-center mt-[78px] px-20 py-[89px] max-md:max-w-full max-md:mt-10 max-md:px-5"
@@ -18,6 +26,7 @@ const ClientSection: React.FC = () => {
         <button
           className="bg-white w-[247px] max-w-full text-[23px] text-[rgba(11,53,98,1)] leading-none mt-24 px-[31px] py-[22px] rounded-[10px] max-md:mt-10 max-md:px-5 hover:bg-gray-100 transition-colors"
           aria-label="Submit Your Idea"
+          onClick={handleSubmitClick}
         >
           Submit Your Idea
         </button>
